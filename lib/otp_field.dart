@@ -75,11 +75,7 @@ class _OTPTextFieldState extends State<OTPTextField> {
 
   @override
   void initState() {
-    if (widget.otpFieldStyle == null) {
-      _otpFieldStyle = OtpFieldStyle();
-    } else {
-      _otpFieldStyle = widget.otpFieldStyle!;
-    }
+    _initalizeStyle();
 
     super.initState();
 
@@ -94,6 +90,14 @@ class _OTPTextFieldState extends State<OTPTextField> {
       return buildTextField(context, i);
     });
   }
+  
+  void _initalizeStyle() {
+    if (widget.otpFieldStyle == null) {
+      _otpFieldStyle = OtpFieldStyle();
+    } else {
+      _otpFieldStyle = widget.otpFieldStyle!;
+    }
+  }
 
   @override
   void dispose() {
@@ -104,6 +108,7 @@ class _OTPTextFieldState extends State<OTPTextField> {
 
   @override
   Widget build(BuildContext context) {
+    _initalizeStyle();
     return Container(
       width: widget.width,
       child: Row(
