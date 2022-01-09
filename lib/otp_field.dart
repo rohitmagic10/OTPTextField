@@ -86,9 +86,6 @@ class _OTPTextFieldState extends State<OTPTextField> {
     _pin = List.generate(widget.length, (int i) {
       return '';
     });
-    _textFields = List.generate(widget.length, (int i) {
-      return buildTextField(context, i);
-    });
   }
   
   void _initalizeStyle() {
@@ -97,6 +94,12 @@ class _OTPTextFieldState extends State<OTPTextField> {
     } else {
       _otpFieldStyle = widget.otpFieldStyle!;
     }
+  }
+  
+  void _buildTextFields() {
+    _textFields = List.generate(widget.length, (int i) {
+      return buildTextField(context, i);
+    });
   }
 
   @override
@@ -109,6 +112,7 @@ class _OTPTextFieldState extends State<OTPTextField> {
   @override
   Widget build(BuildContext context) {
     _initalizeStyle();
+    _buildTextFields();
     return Container(
       width: widget.width,
       child: Row(
