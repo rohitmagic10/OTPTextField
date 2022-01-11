@@ -140,6 +140,7 @@ class _OTPTextFieldState extends State<OTPTextField> {
           color: _otpFieldStyle.backgroundColor,
           borderRadius: BorderRadius.circular(widget.outlineBorderRadius)),
       child: TextField(
+        maxLength: 1,
         controller: _textControllers[i],
         keyboardType: widget.keyboardType,
         textAlign: TextAlign.center,
