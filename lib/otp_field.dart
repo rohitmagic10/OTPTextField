@@ -145,7 +145,6 @@ class _OTPTextFieldState extends State<OTPTextField> {
         inputFormatters: [
           OneTimeCodeTextFormatter(1, _oneTimeCodeInputController)
         ],
-        maxLength: 1,
         controller: _textControllers[i],
         keyboardType: widget.keyboardType,
         textAlign: TextAlign.center,
