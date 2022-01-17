@@ -72,6 +72,7 @@ class _OTPTextFieldState extends State<OTPTextField> {
 
   late List<Widget> _textFields;
   late List<String> _pin;
+  final _oneTimeCodeInputController = OneTimeCodeController();
 
   @override
   void initState() {
@@ -140,6 +141,9 @@ class _OTPTextFieldState extends State<OTPTextField> {
           color: _otpFieldStyle.backgroundColor,
           borderRadius: BorderRadius.circular(widget.outlineBorderRadius)),
       child: TextField(
+        inputFormatters: [
+          OneTimeCodeTextFormatter(1, _oneTimeCodeInputController)
+        ],
         maxLength: 1,
         controller: _textControllers[i],
         keyboardType: widget.keyboardType,
@@ -238,4 +242,28 @@ class _OTPTextFieldState extends State<OTPTextField> {
     // Call the `onChanged` callback function
     widget.onChanged!(currentPin);
   }
+}
+
+/// This is a length formatter class that makes sure that one and only
+/// one value can be inserted in the text field. It also copies the text which
+/// user was trying to insert and pastes them into next text fields.
+class OneTimeCodeTextFormatter extends LengthLimitingTextInputFormatter {
+  OneTimeCodeTextFormatter(int? maxLength, this.controller) : super(maxLength);
+  final OneTimeCodeController controller;
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    if (oldValue.text.isEmpty) {
+      controller.text = newValue.text;
+    } else if (newValue.text.length > oldValue.text.length) {
+      controller.text = newValue.text.substring(oldValue.text.length);
+    } else {
+      controller.text = newValue.text;
+    }
+    return super.formatEditUpdate(oldValue, newValue);
+  }
+}
+
+class OneTimeCodeController {
+  String? text;
 }
