@@ -160,8 +160,10 @@ class _OTPTextFieldState extends State<OTPTextField> {
             disabledBorder: _getBorder(_otpFieldStyle.disabledBorderColor),
             errorBorder: _getBorder(_otpFieldStyle.errorBorderColor)),
         onChanged: (String str) {
-          if (str.length > 1) {
-            _handlePaste(str);
+          final allText = _oneTimeCodeInputController.text ?? '';
+          _oneTimeCodeInputController.text = null;
+          if (allText.length > 1) {
+            _handlePaste(allText);
             return;
           }
 
